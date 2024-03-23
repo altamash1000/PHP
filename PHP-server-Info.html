@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHP Server Info</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+body
+{
+    background-color: black;
+    color: white;
+}
+.container {
+    margin-top: 50px;
+}
+.btn-container {
+    margin-bottom: 20px;
+}
+.result-container {
+    margin-top: 20px;
+    
+}
+</style>
+<script>
+$(document).ready(function(){
+    $(".php-command-btn").click(function(){
+        var command = $(this).data('command');
+        $.ajax({
+            type: 'POST',
+            url: 'php_server_info.php',
+            data: { command: command },
+            success: function(response){
+                $('#result').html(response);
+            }
+        });
+    });
+});
+</script>
+</head>
+<body>
+
+<div class="container">
+    <div class="btn-container">
+        <button class="btn btn-primary php-command-btn" data-command="PHP_SELF">PHP_SELF</button>
+        <button class="btn btn-primary php-command-btn" data-command="SERVER_NAME">SERVER_NAME</button>
+        <button class="btn btn-primary php-command-btn" data-command="HTTP_HOST">HTTP_HOST</button>
+        <button class="btn btn-primary php-command-btn" data-command="HTTP_REFERER">HTTP_REFERER</button>
+        <button class="btn btn-primary php-command-btn" data-command="HTTP_USER_AGENT">HTTP_USER_AGENT</button>
+        <button class="btn btn-primary php-command-btn" data-command="SCRIPT_NAME">SCRIPT_NAME</button>
+    </div>
+
+    <div class="result-container">
+        <b>Results:</b>
+        <div id="result"></div>
+    </div>
+</div>
+
+</body>
+</html>
